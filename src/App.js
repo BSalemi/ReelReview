@@ -50,7 +50,17 @@ const tempWatchedData = [
 const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
-function NavBar({ setQuery, query, movies }) {
+export default function App() {
+  return (
+    <>
+      <NavBar />
+      <Main />
+    </>
+  );
+}
+
+function NavBar() {
+  const [query, setQuery] = useState("");
   return (
     <nav className="nav-bar">
       <div className="logo">
@@ -65,14 +75,13 @@ function NavBar({ setQuery, query, movies }) {
         onChange={(e) => setQuery(e.target.value)}
       />
       <p className="num-results">
-        Found <strong>{movies.length}</strong> results
+        Found <strong>x</strong> results
       </p>
     </nav>
   );
 }
 
-export default function App() {
-  const [query, setQuery] = useState("");
+function Main() {
   const [movies, setMovies] = useState(tempMovieData);
   const [watched, setWatched] = useState(tempWatchedData);
   const [isOpen1, setIsOpen1] = useState(true);
@@ -83,91 +92,88 @@ export default function App() {
   const avgRuntime = average(watched.map((movie) => movie.runtime));
 
   return (
-    <>
-      <NavBar query={query} setQuery={setQuery} movies={movies} />
-      <main className="main">
-        <div className="box">
-          <button
-            className="btn-toggle"
-            onClick={() => setIsOpen1((open) => !open)}
-          >
-            {isOpen1 ? "–" : "+"}
-          </button>
-          {isOpen1 && (
+    <main className="main">
+      <div className="box">
+        <button
+          className="btn-toggle"
+          onClick={() => setIsOpen1((open) => !open)}
+        >
+          {isOpen1 ? "–" : "+"}
+        </button>
+        {isOpen1 && (
+          <ul className="list">
+            {movies?.map((movie) => (
+              <li key={movie.imdbID}>
+                <img src={movie.Poster} alt={`${movie.Title} poster`} />
+                <h3>{movie.Title}</h3>
+                <div>
+                  <p>
+                    <span>🗓</span>
+                    <span>{movie.Year}</span>
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      <div className="box">
+        <button
+          className="btn-toggle"
+          onClick={() => setIsOpen2((open) => !open)}
+        >
+          {isOpen2 ? "–" : "+"}
+        </button>
+        {isOpen2 && (
+          <>
+            <div className="summary">
+              <h2>Movies you watched</h2>
+              <div>
+                <p>
+                  <span>#️⃣</span>
+                  <span>{watched.length} movies</span>
+                </p>
+                <p>
+                  <span>⭐️</span>
+                  <span>{avgImdbRating}</span>
+                </p>
+                <p>
+                  <span>🌟</span>
+                  <span>{avgUserRating}</span>
+                </p>
+                <p>
+                  <span>⏳</span>
+                  <span>{avgRuntime} min</span>
+                </p>
+              </div>
+            </div>
+
             <ul className="list">
-              {movies?.map((movie) => (
+              {watched.map((movie) => (
                 <li key={movie.imdbID}>
                   <img src={movie.Poster} alt={`${movie.Title} poster`} />
                   <h3>{movie.Title}</h3>
                   <div>
                     <p>
-                      <span>🗓</span>
-                      <span>{movie.Year}</span>
+                      <span>⭐️</span>
+                      <span>{movie.imdbRating}</span>
+                    </p>
+                    <p>
+                      <span>🌟</span>
+                      <span>{movie.userRating}</span>
+                    </p>
+                    <p>
+                      <span>⏳</span>
+                      <span>{movie.runtime} min</span>
                     </p>
                   </div>
                 </li>
               ))}
             </ul>
-          )}
-        </div>
-
-        <div className="box">
-          <button
-            className="btn-toggle"
-            onClick={() => setIsOpen2((open) => !open)}
-          >
-            {isOpen2 ? "–" : "+"}
-          </button>
-          {isOpen2 && (
-            <>
-              <div className="summary">
-                <h2>Movies you watched</h2>
-                <div>
-                  <p>
-                    <span>#️⃣</span>
-                    <span>{watched.length} movies</span>
-                  </p>
-                  <p>
-                    <span>⭐️</span>
-                    <span>{avgImdbRating}</span>
-                  </p>
-                  <p>
-                    <span>🌟</span>
-                    <span>{avgUserRating}</span>
-                  </p>
-                  <p>
-                    <span>⏳</span>
-                    <span>{avgRuntime} min</span>
-                  </p>
-                </div>
-              </div>
-
-              <ul className="list">
-                {watched.map((movie) => (
-                  <li key={movie.imdbID}>
-                    <img src={movie.Poster} alt={`${movie.Title} poster`} />
-                    <h3>{movie.Title}</h3>
-                    <div>
-                      <p>
-                        <span>⭐️</span>
-                        <span>{movie.imdbRating}</span>
-                      </p>
-                      <p>
-                        <span>🌟</span>
-                        <span>{movie.userRating}</span>
-                      </p>
-                      <p>
-                        <span>⏳</span>
-                        <span>{movie.runtime} min</span>
-                      </p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </>
-          )}
-        </div>
-      </main>
-    </>
+          </>
+        )}
+      </div>
+    </main>
   );
 }
