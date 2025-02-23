@@ -100,16 +100,15 @@ function NumResults() {
 }
 
 function Main() {
-  const [movies, setMovies] = useState(tempMovieData);
   return (
     <main className="main">
-      <ListBox movies={movies} />
+      <ListBox />
       <WatchedBox />
     </main>
   );
 }
 
-function ListBox({ movies }) {
+function ListBox() {
   const [isOpen1, setIsOpen1] = useState(true);
   return (
     <div className="box">
@@ -119,26 +118,29 @@ function ListBox({ movies }) {
       >
         {isOpen1 ? "–" : "+"}
       </button>
-      {isOpen1 && (
-        <ul className="list">
-          {movies?.map((movie) => (
-            <li key={movie.imdbID}>
-              <img src={movie.Poster} alt={`${movie.Title} poster`} />
-              <h3>{movie.Title}</h3>
-              <div>
-                <p>
-                  <span>🗓</span>
-                  <span>{movie.Year}</span>
-                </p>
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
+      {isOpen1 && <MovieList />}
     </div>
   );
 }
-
+function MovieList() {
+  const [movies, setMovies] = useState(tempMovieData);
+  return (
+    <ul className="list">
+      {movies?.map((movie) => (
+        <li key={movie.imdbID}>
+          <img src={movie.Poster} alt={`${movie.Title} poster`} />
+          <h3>{movie.Title}</h3>
+          <div>
+            <p>
+              <span>🗓</span>
+              <span>{movie.Year}</span>
+            </p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  );
+}
 function WatchedBox() {
   const [watched, setWatched] = useState(tempWatchedData);
   const [isOpen2, setIsOpen2] = useState(true);
