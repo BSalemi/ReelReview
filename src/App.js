@@ -60,10 +60,12 @@ export default function App() {
         <Search />
         <NumResults movies={movies} />
       </NavBar>
+
       <Main>
         <Box>
           <MovieList movies={movies} />
         </Box>
+
         <Box>
           <>
             <WatchedSummary watched={watched} />
