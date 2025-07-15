@@ -1,4 +1,7 @@
 import { useState } from "react";
+
+import Box from "./components/Box";
+import Main from "./Main";
 import MovieList from "./components/MovieList";
 import NavBar from "./components/NavBar";
 import NumResults from "./components/NumResults";
@@ -77,21 +80,5 @@ export default function App() {
         </Box>
       </Main>
     </>
-  );
-}
-
-function Main({ children }) {
-  return <main className="main">{children}</main>;
-}
-
-function Box({ children }) {
-  const [isOpen, setIsOpen] = useState(true);
-  return (
-    <div className="box">
-      <button className="btn-toggle" onClick={() => setIsOpen((open) => !open)}>
-        {isOpen ? "–" : "+"}
-      </button>
-      {isOpen && children}
-    </div>
   );
 }
