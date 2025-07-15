@@ -1,5 +1,6 @@
 import { useState } from "react";
 import NavBar from "./components/NavBar";
+import NumResults from "./components/NumResults";
 import Search from "./components/Search";
 
 const tempMovieData = [
@@ -76,14 +77,6 @@ export default function App() {
         </Box>
       </Main>
     </>
-  );
-}
-
-function NumResults({ movies }) {
-  return (
-    <p className="num-results">
-      Found <strong>{movies.length}</strong> results
-    </p>
   );
 }
 
