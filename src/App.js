@@ -1,4 +1,5 @@
 import { useState } from "react";
+import NavBar from "./components/NavBar";
 
 const tempMovieData = [
   {
@@ -74,15 +75,6 @@ export default function App() {
         </Box>
       </Main>
     </>
-  );
-}
-
-function NavBar({ children }) {
-  return (
-    <nav className="nav-bar">
-      <Logo />
-      {children}
-    </nav>
   );
 }
 
