@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Box from "./components/Box";
 import Main from "./Main";
@@ -8,6 +8,8 @@ import NumResults from "./components/NumResults";
 import Search from "./components/Search";
 import WatchedMovieList from "./components/WatchedMovieList";
 import WatchedSummary from "./components/WatchedSummary";
+
+const API_KEY = process.env.REACT_APP_OMDB_API_KEY;
 
 const tempMovieData = [
   {
@@ -57,13 +59,36 @@ const tempWatchedData = [
 ];
 
 export default function App() {
-  const [watched, setWatched] = useState(tempWatchedData);
   const [movies, setMovies] = useState(tempMovieData);
+  const [query, setQuery] = useState("");
+  const [watched, setWatched] = useState(tempWatchedData);
+
+  useEffect(() => {
+    async function fetchMovies() {
+      if (!query) {
+        setMovies([]);
+        return;
+      }
+
+      const res = await fetch(
+        `https://www.omdbapi.com/?apikey=${API_KEY}&s=${query}`
+      );
+      const data = await res.json();
+
+      if (data.Response === "True") {
+        setMovies(data.Search);
+      } else {
+        setMovies([]); // or handle "Movie not found"
+      }
+    }
+
+    fetchMovies();
+  }, [query]);
 
   return (
     <>
       <NavBar>
-        <Search />
+        <Search query={query} setQuery={setQuery} />
         <NumResults movies={movies} />
       </NavBar>
 
