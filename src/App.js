@@ -41,10 +41,7 @@ export default function App() {
 
   useEffect(() => {
     async function fetchMovies() {
-      if (!query) {
-        setMovies([]);
-        return;
-      }
+      if (!query) return;
 
       const res = await fetch(
         `https://www.omdbapi.com/?apikey=${API_KEY}&s=${query}`
@@ -52,9 +49,17 @@ export default function App() {
       const data = await res.json();
 
       if (data.Response === "True") {
-        setMovies(data.Search);
+        const detailedMovies = await Promise.all(
+          data.Search.map(async (movie) => {
+            const res = await fetch(
+              `https://www.omdbapi.com/?apikey=${API_KEY}&i=${movie.imdbID}`
+            );
+            return await res.json();
+          })
+        );
+        setMovies(detailedMovies);
       } else {
-        setMovies([]); // or handle "Movie not found"
+        setMovies([]);
       }
     }
 
@@ -70,7 +75,7 @@ export default function App() {
 
       <Main>
         <Box>
-          <MovieList movies={movies} />
+          <MovieList movies={movies} query={query} />
         </Box>
 
         <Box>
