@@ -58,6 +58,11 @@ body {
   position: relative;
 }
 
+.movie-page-container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
 .loader {
   text-align: center;
   text-transform: uppercase;

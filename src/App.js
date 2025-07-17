@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Box from "./components/Box";
 import Main from "./Main";
 import MovieList from "./components/MovieList";
+import MoviePage from "./components/MoviePage";
 import NavBar from "./components/NavBar";
 import NumResults from "./components/NumResults";
 import Search from "./components/Search";
