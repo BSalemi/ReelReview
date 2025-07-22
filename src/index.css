@@ -58,11 +58,6 @@ body {
   position: relative;
 }
 
-.movie-page-container {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-}
 .loader {
   text-align: center;
   text-transform: uppercase;
@@ -348,6 +343,200 @@ body {
   font-size: 1.8rem;
   text-align: center;
   padding-top: 10px;
+}
+
+.movie-page-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 3rem;
+  background-color: #0d1117;
+  color: #ffffff;
+  box-sizing: border-box;
+  gap: 3rem;
+}
+
+.movie-card {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  max-width: 1000px;
+  width: 100%;
+  background: #161b22;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 255, 204, 0.1);
+  padding: 2rem;
+}
+
+.movie-poster {
+  width: 300px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.movie-info-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.movie-title {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #00ffc3;
+}
+
+.movie-stats {
+  font-size: 1.2rem;
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.movie-stats p {
+  margin: 0;
+}
+
+.watched-button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  background-color: #00ffc3;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.watched-button:hover {
+  background-color: #00cc9c;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 2rem;
+  color: #00ffc3;
+}
+
+.movie-poster {
+  max-width: 300px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+}
+
+.movie-info {
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.movie-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #00ffc3;
+}
+
+.movie-meta {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  font-size: 1rem;
+  color: #ccc;
+}
+
+.add-button {
+  background: linear-gradient(to right, #00ffc3, #00bfff);
+  border: none;
+  border-radius: 6px;
+  padding: 0.75rem 1.5rem;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.add-button:hover {
+  transform: scale(1.05);
+}
+.movie-page-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 3rem;
+  background-color: #0d1117;
+  color: #ffffff;
+  box-sizing: border-box;
+  gap: 3rem;
+  position: relative;
+}
+
+.movie-poster {
+  max-width: 300px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+}
+
+.movie-info {
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.movie-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #00ffc3;
+}
+
+.movie-meta {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  font-size: 1rem;
+  color: #ccc;
+}
+
+.add-button {
+  background: linear-gradient(to right, #00ffc3, #00bfff);
+  border: none;
+  border-radius: 6px;
+  padding: 0.75rem 1.5rem;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.add-button:hover {
+  transform: scale(1.05);
+}
+
+.back-button {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  background: none;
+  color: #00ffc3;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.back-button:hover {
+  opacity: 0.8;
 }
 
 /*

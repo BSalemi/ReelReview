@@ -1,50 +1,50 @@
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
 const API_KEY = process.env.REACT_APP_OMDB_API_KEY;
 
-export default function MoviePage({ movie }) {
+export default function MoviePage() {
   const { imdbId } = useParams();
-  const [movieDetails, setMovieDetails] = useState(null);
+  const navigate = useNavigate();
+  const [movie, setMovie] = useState(null);
 
   useEffect(() => {
-    async function fetchMovie() {
+    const fetchMovie = async () => {
       try {
-        const response = await fetch(
+        const res = await fetch(
           `https://www.omdbapi.com/?apikey=${API_KEY}&i=${imdbId}`
         );
-        const data = await response.json();
-        setMovieDetails(data);
+        const data = await res.json();
+        setMovie(data);
       } catch (error) {
         console.error("Error fetching movie:", error);
       }
-    }
+    };
 
     fetchMovie();
   }, [imdbId]);
 
-  if (!movieDetails) return <div>Loading...</div>;
+  if (!movie) return <div className="movie-page-container">Loading...</div>;
 
   return (
     <div className="movie-page-container">
-      <div className="movie-title-container">
-        <h1 className="movie-title">{movieDetails.Title}</h1>
-        <img src={movieDetails.Poster} alt={`${movieDetails.Title} poster`} />
-      </div>
+      {/* Back Button */}
+      <button className="back-button" onClick={() => navigate(-1)}>
+        ⬅ Back
+      </button>
+
+      <img className="movie-poster" src={movie.Poster} alt={movie.Title} />
+
       <div className="movie-info">
-        <p>
-          <span>⭐️</span>
-          <span>{movieDetails.imdbRating}</span>
-        </p>
-        <p>
-          <span>⏳</span>
-          <span>{movieDetails.Runtime}</span>
-        </p>
-        <p>
-          <span>🗓</span>
-          <span>{movieDetails.Year}</span>
-        </p>
-        <button className="watched-button">Add to Watched List</button>
+        <h1 className="movie-title">{movie.Title}</h1>
+
+        <div className="movie-meta">
+          <span>⭐ {movie.imdbRating}</span>
+          <span>⏱️ {movie.Runtime}</span>
+          <span>📅 {movie.Year}</span>
+        </div>
+
+        <button className="add-button">Add to Watched List</button>
       </div>
     </div>
   );
