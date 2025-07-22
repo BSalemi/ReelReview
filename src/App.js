@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import Box from "./components/Box";
 import Main from "./Main";
@@ -69,32 +69,34 @@ export default function App() {
   }, [query]);
 
   return (
-    <Routes>
-      <Route
-        path="/"
-        element={
-          <>
-            <NavBar>
-              <Search query={query} setQuery={setQuery} />
-              <NumResults movies={movies} />
-            </NavBar>
+    <Router>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <NavBar>
+                <Search query={query} setQuery={setQuery} />
+                <NumResults movies={movies} />
+              </NavBar>
 
-            <Main>
-              <Box>
-                <MovieList movies={movies} query={query} />
-              </Box>
+              <Main>
+                <Box>
+                  <MovieList movies={movies} query={query} />
+                </Box>
 
-              <Box>
-                <>
-                  <WatchedSummary watched={watched} />
-                  <WatchedMovieList watched={watched} />
-                </>
-              </Box>
-            </Main>
-          </>
-        }
-      />
-      <Route />
-    </Routes>
+                <Box>
+                  <>
+                    <WatchedSummary watched={watched} />
+                    <WatchedMovieList watched={watched} />
+                  </>
+                </Box>
+              </Main>
+            </>
+          }
+        />
+        <Route />
+      </Routes>
+    </Router>
   );
 }
