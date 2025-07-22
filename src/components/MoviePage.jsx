@@ -11,7 +11,7 @@ export default function MoviePage({ movie }) {
     async function fetchMovie() {
       try {
         const response = await fetch(
-          `https://www.omdbapi.com/?i=${imdbId}&apikey=${API_KEY}`
+          `https://www.omdbapi.com/?apikey=${API_KEY}&i=${imdbId}`
         );
         const data = await response.json();
         setMovieDetails(data);
@@ -27,22 +27,25 @@ export default function MoviePage({ movie }) {
 
   return (
     <div className="movie-page-container">
-      <h1 className="movie-title">{movie.Title}</h1>
+      <div className="movie-title-container">
+        <h1 className="movie-title">{movieDetails.Title}</h1>
+        <img src={movieDetails.Poster} alt={`${movieDetails.Title} poster`} />
+      </div>
       <div className="movie-info">
         <p>
           <span>⭐️</span>
-          <span>movieDetails.imdbRating</span>
+          <span>{movieDetails.imdbRating}</span>
         </p>
         <p>
           <span>⏳</span>
-          <span>movieDetails.Runtime</span>
+          <span>{movieDetails.Runtime}</span>
         </p>
         <p>
           <span>🗓</span>
-          <span>movieDetails.Year</span>
+          <span>{movieDetails.Year}</span>
         </p>
+        <button className="watched-button">Add to Watched List</button>
       </div>
-      <button className="watched-button">Add to Watched List</button>
     </div>
   );
 }
