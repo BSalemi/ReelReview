@@ -80,7 +80,7 @@ export default function App() {
       <Route
         path="/movie/:imdbId"
         element={
-          <MoviePage onAddToWatch={handleAddToWatched} watched={watched} />
+          <MoviePage onAddToWatched={handleAddToWatched} watched={watched} />
         }
       />
     </Routes>

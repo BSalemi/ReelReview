@@ -8,8 +8,6 @@ export default function MoviePage({ onAddToWatched, watched }) {
   const navigate = useNavigate();
   const [movie, setMovie] = useState(null);
 
-  let alreadyWatched = watched.some((m) => m.imdbId === movie.imdbId);
-
   useEffect(() => {
     const fetchMovie = async () => {
       try {
@@ -27,6 +25,8 @@ export default function MoviePage({ onAddToWatched, watched }) {
   }, [imdbId]);
 
   if (!movie) return <div className="movie-page-container">Loading...</div>;
+
+  let alreadyWatched = watched.some((m) => m.imdbId === movie.imdbId);
 
   return (
     <div className="movie-page-container">
