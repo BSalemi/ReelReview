@@ -94,7 +94,12 @@ export default function App() {
           </>
         }
       />
-      <Route path="/movie/:imdbId" element={<MoviePage />} />
+      <Route
+        path="/movie/:imdbId"
+        element={
+          <MoviePage onAddToWatch={handleAddToWatched} watched={watched} />
+        }
+      />
     </Routes>
   );
 }

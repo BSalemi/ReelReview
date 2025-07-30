@@ -3,10 +3,12 @@ import { useParams, useNavigate } from "react-router-dom";
 
 const API_KEY = process.env.REACT_APP_OMDB_API_KEY;
 
-export default function MoviePage() {
+export default function MoviePage({ onAddToWatched, watched }) {
   const { imdbId } = useParams();
   const navigate = useNavigate();
   const [movie, setMovie] = useState(null);
+
+  let alreadyWatched = watched.some((m) => m.imdbId === movie.imdbId);
 
   useEffect(() => {
     const fetchMovie = async () => {
@@ -44,7 +46,13 @@ export default function MoviePage() {
           <span>📅 {movie.Year}</span>
         </div>
 
-        <button className="add-button">Add to Watched List</button>
+        <button
+          className="add-button"
+          onClick={() => onAddToWatched(movie)}
+          disabled={alreadyWatched}
+        >
+          {alreadyWatched ? "Already Watched " : "Add to Watched List"}
+        </button>
       </div>
     </div>
   );
