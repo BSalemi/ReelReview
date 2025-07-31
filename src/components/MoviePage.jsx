@@ -49,7 +49,10 @@ export default function MoviePage({ onAddToWatched, watched }) {
           <span>⏱️ {movie.Runtime}</span>
           <span>📅 {movie.Year}</span>
         </div>
-        <StarRating />
+        <StarRating
+          defaultRating={userRating ?? 0}
+          onSetRating={setUserRating}
+        />
         <button
           className="add-button"
           onClick={() => {
