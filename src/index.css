@@ -449,7 +449,7 @@ body {
   display: flex;
   gap: 1rem;
   align-items: center;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   color: #ccc;
 }
 
@@ -498,14 +498,6 @@ body {
   font-size: 2.5rem;
   font-weight: bold;
   color: #00ffc3;
-}
-
-.movie-meta {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  font-size: 1rem;
-  color: #ccc;
 }
 
 .add-button {

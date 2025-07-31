@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
+import StarRating from "./StarRating.jsx";
+
 const API_KEY = process.env.REACT_APP_OMDB_API_KEY;
 
 export default function MoviePage({ onAddToWatched, watched }) {
   const { imdbId } = useParams();
   const navigate = useNavigate();
+
   const [movie, setMovie] = useState(null);
+  const [userRating, setUserRating] = useState(null);
 
   useEffect(() => {
     const fetchMovie = async () => {
@@ -45,11 +49,15 @@ export default function MoviePage({ onAddToWatched, watched }) {
           <span>⏱️ {movie.Runtime}</span>
           <span>📅 {movie.Year}</span>
         </div>
-
+        <StarRating />
         <button
           className="add-button"
-          onClick={() => onAddToWatched(movie)}
-          disabled={alreadyWatched}
+          onClick={() => {
+            if (userRating) {
+              onAddToWatched({ ...movie, userRating });
+            }
+          }}
+          disabled={alreadyWatched || !userRating}
         >
           {alreadyWatched ? "Already Watched " : "Add to Watched List"}
         </button>
