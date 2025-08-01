@@ -28,6 +28,16 @@ export default function MoviePage({ onAddToWatched, watched }) {
     fetchMovie();
   }, [imdbId]);
 
+  useEffect(() => {
+    if (!movie) return;
+
+    const watchedMovie = watched.find((m) => m.imdbId === movie.imdbId);
+
+    if (watchedMovie) {
+      setUserRating(watchedMovie.userRating);
+    }
+  }, [movie, watched]);
+
   if (!movie) return <div className="movie-page-container">Loading...</div>;
 
   let alreadyWatched = watched.some((m) => m.imdbId === movie.imdbId);
