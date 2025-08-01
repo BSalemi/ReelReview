@@ -5,18 +5,22 @@ import StarRating from "./StarRating.jsx";
 
 const API_KEY = process.env.REACT_APP_OMDB_API_KEY;
 
-export default function MoviePage({ onAddToWatched, watched }) {
-  const { imdbId } = useParams();
+export default function MoviePage({
+  onAddToWatched,
+  watched,
+  userRating,
+  onSetUserRating,
+}) {
+  const { imdbID } = useParams();
   const navigate = useNavigate();
 
   const [movie, setMovie] = useState(null);
-  const [userRating, setUserRating] = useState(null);
 
   useEffect(() => {
     const fetchMovie = async () => {
       try {
         const res = await fetch(
-          `https://www.omdbapi.com/?apikey=${API_KEY}&i=${imdbId}`
+          `https://www.omdbapi.com/?apikey=${API_KEY}&i=${imdbID}`
         );
         const data = await res.json();
         setMovie(data);
@@ -26,21 +30,26 @@ export default function MoviePage({ onAddToWatched, watched }) {
     };
 
     fetchMovie();
-  }, [imdbId]);
+  }, [imdbID]);
 
   useEffect(() => {
     if (!movie) return;
 
-    const watchedMovie = watched.find((m) => m.imdbId === movie.imdbId);
+    const watchedMovie = watched.find((m) => m.imdbID === movie.imdbID);
 
-    if (watchedMovie) {
-      setUserRating(watchedMovie.userRating);
+    if (
+      watchedMovie &&
+      userRating?.[movie.imdbID] !== watchedMovie.userRating
+    ) {
+      onSetUserRating(movie.imdbID, watchedMovie.userRating);
     }
-  }, [movie, watched]);
+  }, [movie, watched, onSetUserRating, userRating]);
 
   if (!movie) return <div className="movie-page-container">Loading...</div>;
 
-  let alreadyWatched = watched.some((m) => m.imdbId === movie.imdbId);
+  let alreadyWatched = watched.some((m) => m.imdbID === movie.imdbID);
+
+  const rating = userRating?.[imdbID] ?? 0;
 
   return (
     <div className="movie-page-container">
@@ -60,17 +69,17 @@ export default function MoviePage({ onAddToWatched, watched }) {
           <span>📅 {movie.Year}</span>
         </div>
         <StarRating
-          defaultRating={userRating ?? 0}
-          onSetRating={setUserRating}
+          defaultRating={rating}
+          onSetRating={(rating) => onSetUserRating(imdbID, rating)}
         />
         <button
           className="add-button"
           onClick={() => {
-            if (userRating) {
-              onAddToWatched({ ...movie, userRating });
+            if (rating !== 0) {
+              onAddToWatched({ ...movie, userRating: rating });
             }
           }}
-          disabled={alreadyWatched || !userRating}
+          disabled={alreadyWatched || rating === 0}
         >
           {alreadyWatched ? "Already Watched " : "Add to Watched List"}
         </button>

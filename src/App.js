@@ -17,11 +17,16 @@ export default function App() {
   const [movies, setMovies] = useState([]);
   const [query, setQuery] = useState("");
   const [watched, setWatched] = useState([]);
+  const [userRating, setUserRating] = useState(null);
 
   function handleAddToWatched(movie) {
     if (!watched.some((m) => m.imdbID === movie.imdbID)) {
       setWatched([...watched, movie]);
     }
+  }
+
+  function handleSetUserRating(imdbID, rating) {
+    setUserRating((prev) => ({ ...prev, [imdbID]: rating }));
   }
 
   useEffect(() => {
@@ -78,14 +83,11 @@ export default function App() {
         }
       />
       <Route
-        path="/movie/:imdbId"
+        path="/movie/:imdbID"
         element={
           <MoviePage
-            movie={selectedMovie}
-            userRating={getRatingForMovie(selectedMovie.imdbID)}
-            onSetUserRating={(rating) =>
-              saveRatingForMovie(selectedMovie.imdbID, rating)
-            }
+            userRating={userRating}
+            onSetUserRating={handleSetUserRating}
             onAddToWatched={handleAddToWatched}
             watched={watched}
           />
